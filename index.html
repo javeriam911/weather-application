@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background: url(wthr.jpg);
+            background-size: cover;
+            font-size: 30px;
+            color: rebeccapurple;
+        }
+
+        .main {
+            text-align: center;
+            display: block
+        }
+
+        #img {
+
+            width: 250x;
+            height: 250px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            size: cover
+        }
+
+        .result {
+            font-family: cursive;
+            color:  pink;
+            text-align: center
+        }
+
+        ;
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</head>
+
+<body>
+    <div class="main">
+        <div>
+            <h3>Weather Condition</h3>
+        </div>
+        <div><label> City :</label>
+            <input type="text" required id="city">
+        </div><br>
+        <button onclick="GetWeather()"> Click me</button>
+    </div>
+    <br>
+
+    <div class="result">
+        <div> <img src="" id="img" alt=""></div>
+        <span id="name"></span><br>
+        <span id="country"> </span><br>
+        <span id="temp"></span><br>
+        <span id="humidity"></span><br>
+        <span id="precipitation"></span>
+
+
+
+    </div>
+    <script>
+
+        function GetWeather() {
+            
+            let name = document.getElementById("name");
+            let image = document.getElementById("img");
+            let temperature = document.getElementById("temp");
+            let country = document.getElementById("country")
+            let precipitation = document.getElementById("precipitation")
+            let humidity = document.getElementById("humidity")
+            let city = document.getElementById("city").value
+
+            axios.get(`https://api.weatherapi.com/v1/current.json?key=d8d69f9c4afe469eb91181454232202&q=${city}&aqi=no
+`)
+                .then(function (response) {
+                    Weather = response.data;
+                    temperature.innerHTML = Weather.current.feelslike_c + "°C";
+                    country.innerHTML = Weather.location.country
+                    humidity.innerHTML = Weather.current.humidity + "% humid"
+
+                    console.log(Weather);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+
+            name.innerHTML = city.toLowerCase()
+
+
+
+
+            if (name.innerHTML === "karachi") {
+                image.src = "khi.png"
+            }
+            else if (name.innerHTML === "islamabad") {
+                image.src = "isl.jpg"
+            }
+            else if (name.innerHTML === "lahore") {
+                image.src = "lahore.jpg"
+            }
+            else if (name.innerHTML === "peshawar") {
+                image.src = "peshawar.jpg"
+            }
+            else if (name.innerHTML === "mumbai") {
+                image.src = "mumbai.jpg"
+
+            } else if (name.innerHTML === "delhi") {
+                image.src = "delhi.jpg"
+
+            } else if (name.innerHTML === "france") {
+                image.src = "france.jpg"
+            }
+            else if (city === ""){
+                alert("enter city name");
+                image.src = ""
+            }
+            else {
+                image.src = "else.jpg"
+            }
+          
+        }
+    </script>
+</body>
+
+</html>
